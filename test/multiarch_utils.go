@@ -144,6 +144,8 @@ func initExcludedTests() sets.String {
 		return sets.NewString(
 			// examples
 			"TestExamples/v1alpha1/taskruns/gcs-resource",
+			"TestExamples/v1alpha1/taskruns/build-push-kaniko",
+			"TestExamples/v1alpha1/pipelineruns/pipelinerun",
 			"TestExamples/v1beta1/taskruns/gcs-resource",
 			"TestExamples/v1beta1/pipelineruns/pipelinerun",
 			"TestYamls/yamls/v1beta1/pipelineruns/pipelinerun.yaml",
