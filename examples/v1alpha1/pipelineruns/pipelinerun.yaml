@@ -44,7 +44,7 @@ spec:
   type: git
   params:
   - name: revision
-    value: v0.32.0
+    value: v1.33.1
   - name: url
     value: https://github.com/GoogleContainerTools/skaffold
 ---
@@ -86,6 +86,8 @@ spec:
     - name: pathToContext
       description: The build context used by Kaniko (https://github.com/GoogleContainerTools/kaniko#kaniko-build-contexts)
       default: /workspace/workspace
+    - name: BASE
+      default: alpine:3.9
   outputs:
     resources:
     - name: builtImage
@@ -103,6 +105,7 @@ spec:
     - --dockerfile=$(inputs.params.pathToDockerFile)
     - --destination=$(outputs.resources.builtImage.url)
     - --context=$(inputs.params.pathToContext)
+    - --build-arg=$(inputs.params.BASE)
 ---
 # This task deploys with kubectl apply -f <filename>
 apiVersion: tekton.dev/v1alpha1
@@ -179,6 +182,8 @@ spec:
       value: Dockerfile
     - name: pathToContext
       value: /workspace/workspace/examples/microservices/leeroy-web
+    - name: BASE
+      value: BASE=alpine:3.9
     resources:
       inputs:
       - name: workspace
@@ -195,6 +200,8 @@ spec:
       value: Dockerfile
     - name: pathToContext
       value: /workspace/workspace/examples/microservices/leeroy-app
+    - name: BASE
+      value: BASE=alpine:3.9
     resources:
       inputs:
       - name: workspace
@@ -235,7 +242,7 @@ spec:
     - name: path
       value: /workspace/workspace/examples/microservices/leeroy-web/kubernetes/deployment.yaml
     - name: yqArg
-      value: "-d1"
+      value: "-d0"
     - name: yamlPathToImage
       value: "spec.template.spec.containers[0].image"
 ---
